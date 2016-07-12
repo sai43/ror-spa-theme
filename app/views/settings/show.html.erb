@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @setting.color %>
+</p>
+
+<p>
+  <strong>Font:</strong>
+  <%= @setting.font %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @setting.title %>
+</p>
+
+<%= link_to 'Edit', edit_setting_path(@setting) %> |
+<%= link_to 'Back', settings_path %>
