@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712184928) do
+ActiveRecord::Schema.define(version: 20160712185722) do
 
   create_table "settings", force: :cascade do |t|
-    t.string   "font"
     t.string   "color"
+    t.string   "font"
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
