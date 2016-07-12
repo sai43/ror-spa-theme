@@ -1,31 +1,80 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Listing Settings</h1>
+ <center> <h1 class="title"> Lorem Ipsum </h1> </center>
 
-<table>
-  <thead>
-    <tr>
-      <th>Color</th>
-      <th>Font</th>
-      <th>Title</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="container">
+  <div class="left-container">
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  </div>
+  <div class="right-container"> 
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+  </div>
+</div>
 
-  <tbody>
-    <% @settings.each do |setting| %>
-      <tr>
-        <td><%= setting.color %></td>
-        <td><%= setting.font %></td>
-        <td><%= setting.title %></td>
-        <td><%= link_to 'Show', setting %></td>
-        <td><%= link_to 'Edit', edit_setting_path(setting) %></td>
-        <td><%= link_to 'Destroy', setting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="footer"> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32. </div>
 
-<br>
+<div class="form">
+  <h2> Update values from below and see the changes </h2>
+  <div class="select-box">
+    <lable> 
+      Color:
+    </lable>
+    <%= select_tag :site_color, options_for_select([["Black","#000000"],["White","#FFFFFF"],["Blue","#0000FF"],["Red","#FF0000"],["Green","#00FF00"],["Yellow","#FFFF00"]]), class: 'customselect', id: "select_color" %>
+  </div>
+  <div class="select-box">
+  <lable> 
+      Font:
+    </lable>
+    <%= select_tag :site_font, options_for_select([["Arial","Arial"],["Impact","Impact"],["Courier New","Courier New"],["Times New Roman","Times New Roman"]]), class: 'customselect', id: "select_font" %>
+  </div>
+  <div class="login-form col-wid-65">
+    <lable> 
+      Title:
+    </lable>
+    <%= text_field_tag :title, '', placeholder: 'Title/Header', name: "title", id: "site_title" %>
+    <span class="zip-error"></span>
+  </div>
 
-<%= link_to 'New Setting', new_setting_path %>
+</div>
+
+<script>
+  $(function(){
+    $("body").css({color: "<%= session[:color]%>"});
+    $('body').css({"font-family": "<%= session[:font]%>"});
+    $("#select_color").val("<%= session[:color]%>")
+    $("#select_font").val("<%= session[:font]%>");
+    $("#site_title").val("<%= session[:title]%>");
+    $(".title").text("<%= session[:title]%>")
+    $(document).on("change", "#select_color", function () {
+      var selected_color = $(this).val();
+      $('body').css({color: selected_color})
+      save_property({"color": selected_color})
+    });
+
+    $(document).on("change", "#select_font", function () {
+      var selected_font = $(this).val();
+      $('body').css({"font-family": selected_font});
+      save_property({"font": selected_font})
+    });
+
+    $("#site_title").blur(function (){
+      selected_title = $(this).val()
+      $(".title").text(selected_title)
+      save_property({"title": selected_title})
+    });
+
+    var save_property = function(property){
+      $.ajax({
+        dataType: "script",
+        type: 'post',
+        data: property,
+        url: '/save_property',
+        success: function (data) {
+        },
+        error: function (data) {
+        }
+      });
+    }
+
+  });
+</script>
+
